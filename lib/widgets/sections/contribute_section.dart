@@ -4,6 +4,8 @@ import '../../core/theme.dart';
 import '../../core/breakpoints.dart';
 import '../../services/form_service.dart';
 import '../common/primary_button.dart';
+import '../common/animated_text_field.dart';
+import '../common/animated_message.dart';
 
 /// Contribute section with form
 class ContributeSection extends StatefulWidget {
@@ -105,13 +107,27 @@ class _ContributeSectionState extends State<ContributeSection> {
             key: _formKey,
             child: Column(
               children: [
-                _buildTextField(_nameController, 'Your Name', false, 2),
+                AnimatedTextField(
+                  controller: _nameController,
+                  label: 'Your Name',
+                  minLength: 2,
+                ),
                 const SizedBox(height: 20),
-                _buildTextField(_emailController, 'Email Address', true, 5),
+                AnimatedTextField(
+                  controller: _emailController,
+                  label: 'Email Address',
+                  isEmail: true,
+                  minLength: 5,
+                ),
                 const SizedBox(height: 20),
                 _buildDropdown(),
                 const SizedBox(height: 20),
-                _buildTextField(_messageController, 'Tell us more', false, 10, maxLines: 5),
+                AnimatedTextField(
+                  controller: _messageController,
+                  label: 'Tell us more',
+                  minLength: 10,
+                  maxLines: 5,
+                ),
                 const SizedBox(height: 32),
                 PrimaryButton(
                   text: _isSubmitting ? 'Submitting...' : 'Submit Contribution',
@@ -121,15 +137,10 @@ class _ContributeSectionState extends State<ContributeSection> {
                 ),
                 if (_statusMessage != null) ...[
                   const SizedBox(height: 16),
-                  Text(
-                    _statusMessage!,
-                    style: GoogleFonts.tiny5(
-                      fontSize: 14,
-                      color: _statusMessage!.startsWith('Thank') 
-                          ? AppTheme.greenPrimary 
-                          : AppTheme.redPrimary,
-                    ),
-                    textAlign: TextAlign.center,
+                  AnimatedMessage(
+                    message: _statusMessage!,
+                    isSuccess: _statusMessage!.startsWith('Thank'),
+                    onDismiss: () => setState(() => _statusMessage = null),
                   ),
                 ],
               ],
@@ -137,43 +148,6 @@ class _ContributeSectionState extends State<ContributeSection> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildTextField(TextEditingController controller, String label, 
-      bool isEmail, int minLength, {int maxLines = 1}) {
-    return TextFormField(
-      controller: controller,
-      maxLines: maxLines,
-      style: GoogleFonts.tiny5(fontSize: 16, color: Colors.white),
-      decoration: InputDecoration(
-        labelText: label,
-        labelStyle: GoogleFonts.tiny5(color: AppTheme.cyanAccent),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppTheme.cyanAccent, width: 2),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppTheme.cyanAccent, width: 2),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppTheme.redPrimary, width: 2),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: AppTheme.redPrimary, width: 2),
-        ),
-      ),
-      validator: (value) {
-        if (value == null || value.trim().isEmpty) {
-          return 'This field is required';
-        }
-        if (value.trim().length < minLength) {
-          return 'Must be at least $minLength characters';
-        }
-        if (isEmail && !value.contains('@')) {
-          return 'Please enter a valid email';
-        }
-        return null;
-      },
     );
   }
 

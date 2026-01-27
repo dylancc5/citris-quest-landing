@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../core/theme.dart';
-import '../../core/typography.dart';
 import '../../painters/corner_brackets_painter.dart';
 
 /// Primary CTA button with retro pixel-art styling and hover effects
@@ -31,9 +31,14 @@ class _PrimaryButtonState extends State<PrimaryButton> {
   bool _isPressed = false;
 
   double get _glowBlur {
-    if (_isPressed) return 35.0;
+    if (_isPressed) return 50.0; // Increased from 35 for stronger press effect
     if (_isHovered) return 25.0;
     return 15.0;
+  }
+
+  double get _scale {
+    if (_isPressed) return 0.95; // Scale down on press
+    return 1.0;
   }
 
   @override
@@ -50,9 +55,13 @@ class _PrimaryButtonState extends State<PrimaryButton> {
         onTapUp: (_) => setState(() => _isPressed = false),
         onTapCancel: () => setState(() => _isPressed = false),
         onTap: isEnabled ? widget.onPressed : null,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
+        child: AnimatedScale(
+          scale: _scale,
+          duration: Duration(milliseconds: _isPressed ? 100 : 200),
+          curve: _isPressed ? Curves.easeOut : Curves.easeOutBack,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
           width: widget.width ?? 200,
           height: widget.height,
           decoration: BoxDecoration(
@@ -84,17 +93,25 @@ class _PrimaryButtonState extends State<PrimaryButton> {
                 ),
               // Button text
               Center(
-                child: Text(
-                  widget.text.toUpperCase(),
-                  style: AppTypography.buttonText(context).copyWith(
-                    color: isEnabled ? textColor : AppTheme.textDisabled,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 1,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    widget.text.toUpperCase(),
+                    style: GoogleFonts.tiny5(
+                      fontSize: 20, // Fixed larger size instead of responsive
+                      color: isEnabled ? textColor : AppTheme.textDisabled,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 1,
+                      height: 1.0, // Set line height to 1.0 for proper vertical centering
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
             ],
+          ),
           ),
         ),
       ),

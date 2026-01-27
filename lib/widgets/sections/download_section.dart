@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../core/theme.dart';
 import '../../core/breakpoints.dart';
 import '../common/primary_button.dart';
+import '../common/pixelated_qr_code.dart';
 
 /// Download section with TestFlight CTA
 class DownloadSection extends StatelessWidget {
@@ -18,9 +19,11 @@ class DownloadSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isMobile = MediaQuery.of(context).size.width < 900;
+
     return Container(
       constraints: const BoxConstraints(
-        maxWidth: 600,
+        maxWidth: 1000,
       ),
       padding: EdgeInsets.symmetric(
         horizontal: Breakpoints.horizontalPadding(context),
@@ -52,51 +55,43 @@ class DownloadSection extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 40),
-          // Instructions
-          ...List.generate(4, (index) {
-            final steps = [
-              'Download TestFlight from the App Store',
-              'Tap the invite link below',
-              'Install CITRIS Quest beta',
-              'Start scanning!',
-            ];
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: Row(
-                children: [
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: AppTheme.cyanAccent, width: 2),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '${index + 1}',
-                        style: GoogleFonts.tiny5(
-                          fontSize: 16,
-                          color: AppTheme.cyanAccent,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Text(
-                      steps[index],
-                      style: GoogleFonts.tiny5(
-                        fontSize: 16,
-                        color: Colors.white.withValues(alpha: 0.85),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }),
+          const SizedBox(height: 60),
+
+          // QR Code + Instructions Layout (responsive)
+          if (isMobile)
+            // Mobile: Stacked layout
+            Column(
+              children: [
+                // QR Code on top
+                PixelatedQrCode(
+                  data: 'https://testflight.apple.com/join/QSQXHdqH',
+                  size: 200,
+                  label: 'SCAN TO DOWNLOAD',
+                ),
+                const SizedBox(height: 48),
+                // Instructions below
+                _buildInstructions(),
+              ],
+            )
+          else
+            // Desktop: Side-by-side layout
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Instructions on left
+                Expanded(
+                  child: _buildInstructions(),
+                ),
+                const SizedBox(width: 48),
+                // QR Code on right
+                PixelatedQrCode(
+                  data: 'https://testflight.apple.com/join/QSQXHdqH',
+                  size: 240,
+                  label: 'SCAN TO DOWNLOAD',
+                ),
+              ],
+            ),
+
           const SizedBox(height: 40),
           // CTA Button
           PrimaryButton(
@@ -107,6 +102,57 @@ class DownloadSection extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildInstructions() {
+    final steps = [
+      'Download TestFlight from the App Store',
+      'Tap the invite link or scan the QR code',
+      'Install CITRIS Quest beta',
+      'Start scanning!',
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: List.generate(4, (index) {
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: AppTheme.cyanAccent, width: 2),
+                ),
+                child: Center(
+                  child: Text(
+                    '${index + 1}',
+                    style: GoogleFonts.tiny5(
+                      fontSize: 16,
+                      color: AppTheme.cyanAccent,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  steps[index],
+                  style: GoogleFonts.tiny5(
+                    fontSize: 16,
+                    color: Colors.white.withValues(alpha: 0.85),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/theme.dart';
 import '../../core/breakpoints.dart';
+import '../common/hover_lift_card.dart';
 
 /// How to Play section with 4-step guide
-class HowToPlaySection extends StatelessWidget {
+class HowToPlaySection extends StatefulWidget {
   const HowToPlaySection({super.key});
+
+  @override
+  State<HowToPlaySection> createState() => _HowToPlaySectionState();
+}
+
+class _HowToPlaySectionState extends State<HowToPlaySection> {
+  int? _hoveredIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -126,29 +134,36 @@ class HowToPlaySection extends StatelessWidget {
 
   Widget _buildStep(BuildContext context, int number, String title,
       String description, IconData icon, Color color) {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            const Color(0xFF0f1a2e),
-            const Color(0xFF16213e),
-            const Color(0xFF1a2542),
-          ],
-        ),
-        border: Border.all(color: color, width: 2),
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: color.withValues(alpha: 0.4),
-            blurRadius: 15,
-            spreadRadius: 1,
+    return MouseRegion(
+      onEnter: (_) => setState(() => _hoveredIndex = number),
+      onExit: (_) => setState(() => _hoveredIndex = null),
+      child: HoverLiftCard(
+        liftDistance: 8,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOut,
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                const Color(0xFF0f1a2e),
+                const Color(0xFF16213e),
+                const Color(0xFF1a2542),
+              ],
+            ),
+            border: Border.all(color: color, width: 2),
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: [
+              BoxShadow(
+                color: color.withValues(alpha: _hoveredIndex == number ? 0.6 : 0.4),
+                blurRadius: _hoveredIndex == number ? 25 : 15,
+                spreadRadius: 1,
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Column(
+          child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Step number + icon
@@ -221,6 +236,8 @@ class HowToPlaySection extends StatelessWidget {
             ),
           ),
         ],
+      ),
+        ),
       ),
     );
   }

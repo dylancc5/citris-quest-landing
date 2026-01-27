@@ -67,12 +67,20 @@ class FooterSection extends StatelessWidget {
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
           onTap: () => _launchUrl(link['url']!),
-          child: Text(
-            link['text']!,
-            style: GoogleFonts.tiny5(
-              fontSize: 14,
-              color: AppTheme.cyanAccent,
-              decoration: TextDecoration.underline,
+          // Ensure minimum 44x44px touch target (Apple HIG standard)
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            constraints: const BoxConstraints(
+              minWidth: 44,
+              minHeight: 44,
+            ),
+            child: Text(
+              link['text']!,
+              style: GoogleFonts.tiny5(
+                fontSize: 14,
+                color: AppTheme.cyanAccent,
+                decoration: TextDecoration.underline,
+              ),
             ),
           ),
         ),

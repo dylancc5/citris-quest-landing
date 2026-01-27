@@ -1,0 +1,29 @@
+<svg width="48" height="48" xmlns="http://www.w3.org/2000/svg">
+  <!-- Navy blue background matching app theme -->
+  <rect width="48" height="48" fill="#0A0E27"/>
+  
+  <!-- Space invader in cyan/CITRIS blue -->
+  <g transform="translate(8, 12)">
+    <!-- Classic space invader pixel art -->
+    <rect x="8" y="0" width="4" height="4" fill="#00E5FF"/>
+    <rect x="20" y="0" width="4" height="4" fill="#00E5FF"/>
+    
+    <rect x="12" y="4" width="4" height="4" fill="#00E5FF"/>
+    <rect x="16" y="4" width="4" height="4" fill="#00E5FF"/>
+    
+    <rect x="4" y="8" width="24" height="4" fill="#00E5FF"/>
+    
+    <rect x="0" y="12" width="4" height="4" fill="#00E5FF"/>
+    <rect x="8" y="12" width="4" height="4" fill="#00E5FF"/>
+    <rect x="12" y="12" width="4" height="4" fill="#00E5FF"/>
+    <rect x="16" y="12" width="4" height="4" fill="#00E5FF"/>
+    <rect x="20" y="12" width="4" height="4" fill="#00E5FF"/>
+    <rect x="28" y="12" width="4" height="4" fill="#00E5FF"/>
+    
+    <rect x="0" y="16" width="8" height="4" fill="#00E5FF"/>
+    <rect x="24" y="16" width="8" height="4" fill="#00E5FF"/>
+    
+    <rect x="4" y="20" width="4" height="4" fill="#00E5FF"/>
+    <rect x="24" y="20" width="4" height="4" fill="#00E5FF"/>
+  </g>
+</svg>

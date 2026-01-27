@@ -5,10 +5,13 @@ import '../../core/theme.dart';
 import '../../core/breakpoints.dart';
 import '../../painters/space_invader_painter.dart';
 import '../common/primary_button.dart';
+import '../common/pulsing_glow_text.dart';
 
 /// Hero section with animated Space Invader and CTA
 class HeroSection extends StatefulWidget {
-  const HeroSection({super.key});
+  final VoidCallback? onLearnMoreTap;
+
+  const HeroSection({super.key, this.onLearnMoreTap});
 
   @override
   State<HeroSection> createState() => _HeroSectionState();
@@ -47,6 +50,10 @@ class _HeroSectionState extends State<HeroSection>
     if (await canLaunchUrl(url)) {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     }
+  }
+
+  void _scrollToHowToPlay() {
+    widget.onLearnMoreTap?.call();
   }
 
   @override
@@ -97,11 +104,22 @@ class _HeroSectionState extends State<HeroSection>
         // Subheadline
         _buildSubheadline(context),
         const SizedBox(height: 40),
-        // CTA Button
+        // Primary CTA Button
         PrimaryButton(
           text: 'Download on TestFlight',
           onPressed: _launchTestFlight,
-          width: 280,
+          width: 320,
+          height: 70,
+        ),
+        const SizedBox(height: 24),
+        // Secondary "Learn More" Button
+        PrimaryButton(
+          text: 'Learn More',
+          onPressed: _scrollToHowToPlay,
+          width: 320,
+          height: 70,
+          borderColor: AppTheme.magentaPrimary,
+          textColor: AppTheme.magentaPrimary,
         ),
       ],
     );
@@ -126,8 +144,17 @@ class _HeroSectionState extends State<HeroSection>
               PrimaryButton(
                 text: 'Download on TestFlight',
                 onPressed: _launchTestFlight,
-                width: 300,
-                height: 70,
+                width: 350,
+                height: 75,
+              ),
+              const SizedBox(height: 24),
+              PrimaryButton(
+                text: 'Learn More',
+                onPressed: _scrollToHowToPlay,
+                width: 350,
+                height: 75,
+                borderColor: AppTheme.magentaPrimary,
+                textColor: AppTheme.magentaPrimary,
               ),
             ],
           ),
@@ -159,31 +186,92 @@ class _HeroSectionState extends State<HeroSection>
   }
 
   Widget _buildHeadline(BuildContext context) {
+    final isMobile = Breakpoints.isMobile(context);
+    final isTablet = Breakpoints.isTablet(context);
+
+    return Column(
+      crossAxisAlignment: isMobile || isTablet
+          ? CrossAxisAlignment.center
+          : CrossAxisAlignment.start,
+      children: [
+        // "CITRIS QUEST" title with pulsing glow
+        ShaderMask(
+          shaderCallback: (bounds) => LinearGradient(
+            colors: [AppTheme.cyanAccent, AppTheme.bluePrimary],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ).createShader(bounds),
+          child: PulsingGlowText(
+            text: 'CITRIS QUEST',
+            style: GoogleFonts.tiny5(
+              fontSize: Breakpoints.responsive<double>(
+                context,
+                mobile: 40,  // Increased from 64px
+                tablet: 52,  // Increased from 84px
+                desktop: 64, // Increased from 120px
+              ),
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
+              height: 1.2,
+            ),
+            glowColor: AppTheme.cyanAccent,
+            minGlowBlur: 30.0,
+            maxGlowBlur: 50.0,
+            pulseDuration: const Duration(seconds: 3),
+            textAlign: isMobile || isTablet
+                ? TextAlign.center
+                : TextAlign.left,
+          ),
+        ),
+        const SizedBox(height: 24),
+        // "Celebrating 25 Years..." subtitle with improved contrast
+        Text(
+          'Celebrating 25 Years of CITRIS Innovation',
+          style: GoogleFonts.tiny5(
+            fontSize: Breakpoints.responsive<double>(
+              context,
+              mobile: 20,  // Increased from 18pt
+              tablet: 22,  // Increased from 20pt
+              desktop: 24, // Same as before
+            ),
+            fontWeight: FontWeight.w400,
+            color: AppTheme.bluePrimary,
+            height: 1.4,  // Increased line-height for breathing room
+            shadows: [
+              Shadow(
+                color: Colors.black.withValues(alpha: 0.5),
+                blurRadius: 2,
+              ),
+            ],
+          ),
+          textAlign: isMobile || isTablet
+              ? TextAlign.center
+              : TextAlign.left,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSubheadline(BuildContext context) {
     final fontSize = Breakpoints.responsive<double>(
       context,
-      mobile: 28,
-      tablet: 36,
-      desktop: 48,
+      mobile: 18,  // Increased from 15pt
+      tablet: 19,  // Increased from 17pt
+      desktop: 20, // Same as before
     );
 
-    return ShaderMask(
-      shaderCallback: (bounds) => LinearGradient(
-        colors: [AppTheme.cyanAccent, AppTheme.bluePrimary],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ).createShader(bounds),
+    return Padding(
+      padding: const EdgeInsets.only(top: 32), // Increased spacing from subtitle
       child: Text(
-        'Celebrating 25 Years of CITRIS Innovation',
-        style: TextStyle(
-          fontFamily: 'Silkscreen',
+        'Scan artwork. Collect memories. Compete with the community.',
+        style: GoogleFonts.tiny5(
           fontSize: fontSize,
-          fontWeight: FontWeight.w700,
-          color: Colors.white,
-          height: 1.3,
+          color: Colors.white,  // Boosted from 70% to 100% opacity
+          fontWeight: FontWeight.w400,
           shadows: [
             Shadow(
-              color: AppTheme.cyanAccent.withValues(alpha: 0.4),
-              blurRadius: 20,
+              color: Colors.black.withValues(alpha: 0.5),
+              blurRadius: 2,
             ),
           ],
         ),
@@ -191,27 +279,6 @@ class _HeroSectionState extends State<HeroSection>
             ? TextAlign.center
             : TextAlign.left,
       ),
-    );
-  }
-
-  Widget _buildSubheadline(BuildContext context) {
-    final fontSize = Breakpoints.responsive<double>(
-      context,
-      mobile: 18,
-      tablet: 20,
-      desktop: 24,
-    );
-
-    return Text(
-      'Scan artwork. Collect memories. Compete with the community.',
-      style: GoogleFonts.tiny5(
-        fontSize: fontSize,
-        color: Colors.white.withValues(alpha: 0.7),
-        fontWeight: FontWeight.w400,
-      ),
-      textAlign: Breakpoints.isMobile(context) || Breakpoints.isTablet(context)
-          ? TextAlign.center
-          : TextAlign.left,
     );
   }
 }

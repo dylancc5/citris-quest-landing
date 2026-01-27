@@ -117,14 +117,26 @@ class AboutSection extends StatelessWidget {
       desktop: 18,
     );
 
-    return Text(
-      'CITRIS Quest celebrates 25 years of innovation at the Center for Information Technology Research in the Interest of Society. This location-based mobile game transforms campus artwork into interactive collectibles. Scan physical art pieces using your camera, earn XP and coins, unlock achievements, and compete on the global leaderboard.',
-      style: GoogleFonts.tiny5(
-        fontSize: fontSize,
-        color: Colors.white.withValues(alpha: 0.85),
-        fontWeight: FontWeight.w400,
-      ).copyWith(height: 1.6),
+    return RichText(
       textAlign: Breakpoints.isMobile(context) ? TextAlign.center : TextAlign.left,
+      text: TextSpan(
+        style: GoogleFonts.tiny5(
+          fontSize: fontSize,
+          color: Colors.white.withValues(alpha: 0.85),
+          fontWeight: FontWeight.w400,
+          height: 1.6,
+        ),
+        children: [
+          const TextSpan(text: 'CITRIS Quest celebrates '),
+          TextSpan(
+            text: '25 years of innovation',
+            style: TextStyle(color: AppTheme.bluePrimary),
+          ),
+          const TextSpan(
+            text: ' at the Center for Information Technology Research in the Interest of Society. This location-based mobile game transforms campus artwork into interactive collectibles. Scan physical art pieces using your camera, earn XP and coins, unlock achievements, and compete on the global leaderboard.',
+          ),
+        ],
+      ),
     );
   }
 }
