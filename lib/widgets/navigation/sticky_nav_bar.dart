@@ -223,6 +223,7 @@ class _StickyNavBarState extends State<StickyNavBar> {
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Logo (tappable, scrolls to top)
             _buildLogo(),

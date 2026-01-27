@@ -87,7 +87,7 @@ class _HeroSectionState extends State<HeroSection>
               offset: Offset(0, _floatAnimation.value),
               child: SizedBox(
                 width: 120,
-                height: 120,
+                height: 120 * (8 / 11), // Maintain 11:8 aspect ratio
                 child: CustomPaint(
                   painter: SpaceInvaderPainter(
                     color: AppTheme.cyanAccent,
@@ -166,11 +166,12 @@ class _HeroSectionState extends State<HeroSection>
           child: AnimatedBuilder(
             animation: _floatAnimation,
             builder: (context, child) {
+              final invaderWidth = screenWidth * 0.25;
               return Transform.translate(
                 offset: Offset(0, _floatAnimation.value),
                 child: SizedBox(
-                  width: screenWidth * 0.25,
-                  height: screenWidth * 0.25,
+                  width: invaderWidth,
+                  height: invaderWidth * (8 / 11), // Maintain 11:8 aspect ratio
                   child: CustomPaint(
                     painter: SpaceInvaderPainter(
                       color: AppTheme.cyanAccent,

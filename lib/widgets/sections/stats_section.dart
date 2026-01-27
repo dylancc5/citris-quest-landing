@@ -82,18 +82,24 @@ class _StatsSectionState extends State<StatsSection> {
   Widget _buildMobileLayout() {
     return Column(
       children: [
-        _buildStatCard(
-          cardIndex: 0,
-          icon: Icons.photo_camera,
-          value: _totalScans,
-          label: 'SCANS COMPLETED',
+        SizedBox(
+          width: double.infinity,
+          child: _buildStatCard(
+            cardIndex: 0,
+            icon: Icons.photo_camera,
+            value: _totalScans,
+            label: 'SCANS COMPLETED',
+          ),
         ),
         const SizedBox(height: 24),
-        _buildStatCard(
-          cardIndex: 1,
-          icon: Icons.people,
-          value: _totalUsers,
-          label: 'ACTIVE PLAYERS',
+        SizedBox(
+          width: double.infinity,
+          child: _buildStatCard(
+            cardIndex: 1,
+            icon: Icons.people,
+            value: _totalUsers,
+            label: 'ACTIVE PLAYERS',
+          ),
         ),
       ],
     );

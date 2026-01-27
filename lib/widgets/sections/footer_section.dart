@@ -90,7 +90,7 @@ class FooterSection extends StatelessWidget {
 
   Widget _buildCopyright(BuildContext context) {
     return Text(
-      '© 2025 CITRIS Quest. Built with Flutter.',
+      '© 2026 CITRIS Quest.',
       style: GoogleFonts.tiny5(
         fontSize: 14,
         color: Colors.white.withValues(alpha: 0.5),
