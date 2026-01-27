@@ -1,0 +1,26 @@
+name: citris_quest_landing
+description: CITRIS Quest landing page - Celebrating 25 Years of CITRIS Innovation
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: ^8.0.0           # Tiny 5, Silkscreen
+  url_launcher: ^6.3.1           # Open TestFlight link
+  supabase_flutter: ^2.10.0      # Form submission to contributions table
+  visibility_detector: ^0.4.0+2  # Scroll-triggered animations
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/

@@ -1,0 +1,35 @@
+{
+    "name": "CITRIS Quest - Location-Based Campus Art Game",
+    "short_name": "CITRIS Quest",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0A0E27",
+    "theme_color": "#1295D8",
+    "description": "Celebrate 25 years of CITRIS innovation. Scan campus artwork, earn rewards, and compete with the community in this retro-styled mobile game.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
