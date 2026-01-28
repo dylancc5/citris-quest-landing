@@ -37,10 +37,10 @@ class StatsService {
     }
 
     try {
-      // Use count() to get total count efficiently
+      // Use count() with scans PK column (scans has file_name as PK, not id)
       final response = await client
           .from('scans')
-          .select('id')
+          .select('file_name')
           .count(CountOption.exact);
 
       _cachedTotalScans = response.count;
@@ -68,10 +68,10 @@ class StatsService {
     }
 
     try {
-      // Use count() to get total count efficiently
+      // Use count() with user_profiles PK column (user_profiles has player_id as PK, not id)
       final response = await client
           .from('user_profiles')
-          .select('id')
+          .select('player_id')
           .count(CountOption.exact);
 
       _cachedTotalUsers = response.count;

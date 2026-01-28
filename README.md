@@ -36,35 +36,46 @@ Flutter Web landing page for CITRIS Quest celebrating 25 years of CITRIS innovat
 flutter pub get
 ```
 
-2. Run locally:
+2. Run locally (with Supabase so "By the numbers" and forms work):
 ```bash
-flutter run -d chrome
+flutter run -d chrome \
+  --dart-define=SUPABASE_URL=https://YOUR_PROJECT.supabase.co \
+  --dart-define=SUPABASE_ANON_KEY=your_anon_key
 ```
+Flutter web only reads these via `--dart-define` at build/run time.
 
 3. Build for production:
 ```bash
-flutter build web --release
+flutter build web --release \
+  --base-href /citris-quest-landing/ \
+  --dart-define=SUPABASE_URL=https://YOUR_PROJECT.supabase.co \
+  --dart-define=SUPABASE_ANON_KEY=your_anon_key
 ```
 
 ## Deployment
 
-### GitHub Pages Setup
+### GitHub Pages setup
 
-1. **Enable GitHub Pages**:
-   - Go to repository Settings → Pages
-   - Source: GitHub Actions (not branch)
-   - URL will be: `https://[username].github.io/citris-quest-landing/`
+Supabase URL and anon key are **injected at build time** via GitHub Actions secrets and `--dart-define`. The built JS gets those values baked in; nothing is read at runtime from env files.
 
-2. **Add Supabase Secrets**:
-   - Go to Settings → Secrets and variables → Actions
-   - Add secrets:
-     - `SUPABASE_URL`: Your Supabase project URL
-     - `SUPABASE_ANON_KEY`: Your Supabase anonymous key
+1. **Enable GitHub Pages**
+   - Repo **Settings → Pages**
+   - Source: **GitHub Actions** (not “Deploy from a branch”)
+   - After the first successful deploy, the site will be at `https://[username].github.io/citris-quest-landing/` (or your repo name if different).
 
-3. **Deploy**:
-   - Push to `main` branch
-   - GitHub Actions will automatically build and deploy
-   - Check Actions tab for deployment status
+2. **Configure build: add Supabase secrets**
+   - Repo **Settings → Secrets and variables → Actions**
+   - Add **Repository secrets**:
+     - **Name:** `SUPABASE_URL`  
+       **Value:** `https://YOUR_PROJECT_REF.supabase.co`
+     - **Name:** `SUPABASE_ANON_KEY`  
+       **Value:** your project’s **anon/public** key from Supabase Dashboard → Project Settings → API
+
+   If these are missing, the workflow builds with empty values and the site won’t talk to Supabase (e.g. “By the numbers” stays at 0, forms won’t submit).
+
+3. **Deploy**
+   - Push to `main`. The workflow in **`.github/workflows/deploy.yml`** builds and deploys.
+   - Check the **Actions** tab to confirm “Deploy to GitHub Pages” succeeds.
 
 ### Custom Domain (Optional)
 
@@ -134,16 +145,14 @@ lib/
 - **Privacy Policy**: https://citris-quest.notion.site/privacy-policy?source=copy_link
 - **Terms & Conditions**: https://citris-quest.notion.site/terms-and-conditions?source=copy_link
 
-## Database Migration
+## Database / Supabase
 
-Before deploying, ensure the `contributions` table exists in Supabase:
+Before deploying, ensure your Supabase project has the tables and policies the landing app needs:
 
-```bash
-# From the main app directory (citris_quest):
-supabase db push
-```
+- **contributions** table and RLS allowing anonymous inserts (for the Contribute form)
+- **scans** and **user_profiles** with RLS policies allowing anonymous count (for “By the numbers”)
 
-This creates the contributions table with RLS policies allowing anonymous inserts.
+If you manage Supabase from another repo (e.g. the main app), run that project’s migrations (`supabase db push`) so these exist.
 
 ## License
 

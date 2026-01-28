@@ -102,6 +102,7 @@ class _LandingPageState extends State<LandingPage> {
                   HeroSection(
                     key: _heroKey,
                     onLearnMoreTap: _scrollToHowToPlay,
+                    onDownloadTap: _scrollToDownload,
                   ),
 
                   // About CITRIS Section

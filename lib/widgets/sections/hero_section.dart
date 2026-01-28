@@ -1,6 +1,5 @@
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../core/theme.dart';
 import '../../core/breakpoints.dart';
 import '../../painters/space_invader_painter.dart';
@@ -10,8 +9,9 @@ import '../common/pulsing_glow_text.dart';
 /// Hero section with animated Space Invader and CTA
 class HeroSection extends StatefulWidget {
   final VoidCallback? onLearnMoreTap;
+  final VoidCallback? onDownloadTap;
 
-  const HeroSection({super.key, this.onLearnMoreTap});
+  const HeroSection({super.key, this.onLearnMoreTap, this.onDownloadTap});
 
   @override
   State<HeroSection> createState() => _HeroSectionState();
@@ -45,11 +45,8 @@ class _HeroSectionState extends State<HeroSection>
     super.dispose();
   }
 
-  Future<void> _launchTestFlight() async {
-    final url = Uri.parse('https://testflight.apple.com/join/QSQXHdqH');
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
-    }
+  void _handleDownloadTap() {
+    widget.onDownloadTap?.call();
   }
 
   void _scrollToHowToPlay() {
@@ -107,7 +104,7 @@ class _HeroSectionState extends State<HeroSection>
         // Primary CTA Button
         PrimaryButton(
           text: 'Download on TestFlight',
-          onPressed: _launchTestFlight,
+          onPressed: _handleDownloadTap,
           width: 320,
           height: 70,
         ),
@@ -143,7 +140,7 @@ class _HeroSectionState extends State<HeroSection>
               const SizedBox(height: 48),
               PrimaryButton(
                 text: 'Download on TestFlight',
-                onPressed: _launchTestFlight,
+                onPressed: _handleDownloadTap,
                 width: 350,
                 height: 75,
               ),
@@ -166,12 +163,11 @@ class _HeroSectionState extends State<HeroSection>
           child: AnimatedBuilder(
             animation: _floatAnimation,
             builder: (context, child) {
-              final invaderWidth = screenWidth * 0.25;
               return Transform.translate(
                 offset: Offset(0, _floatAnimation.value),
                 child: SizedBox(
-                  width: invaderWidth,
-                  height: invaderWidth * (8 / 11), // Maintain 11:8 aspect ratio
+                  width: screenWidth * 0.25,
+                  height: screenWidth * 0.25,
                   child: CustomPaint(
                     painter: SpaceInvaderPainter(
                       color: AppTheme.cyanAccent,

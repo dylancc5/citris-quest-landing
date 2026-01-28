@@ -104,7 +104,10 @@ class _CreditsSectionState extends State<CreditsSection> {
           final cat = entry.value;
           return Padding(
             padding: const EdgeInsets.only(bottom: 24),
-            child: _buildCreditCard(index, cat['title'] as String, cat['items'] as List<String>),
+            child: SizedBox(
+              width: double.infinity,
+              child: _buildCreditCard(index, cat['title'] as String, cat['items'] as List<String>),
+            ),
           );
         }).toList(),
       );

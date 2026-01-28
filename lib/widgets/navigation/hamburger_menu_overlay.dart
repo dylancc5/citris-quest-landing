@@ -22,76 +22,83 @@ class HamburgerMenuOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 64, // Below the nav bar
-      left: 0,
-      right: 0,
-      child: GestureDetector(
-        onTap: onClose, // Close when tapping outside
-        behavior: HitTestBehavior.opaque,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            GestureDetector(
-              onTap: () {}, // Prevent tap propagation to parent
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeOut,
-                padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
-                decoration: BoxDecoration(
-                  color: AppTheme.backgroundPrimary.withValues(alpha: 0.98),
-                  border: Border(
-                    bottom: BorderSide(
-                      color: AppTheme.cyanAccent.withValues(alpha: 0.3),
-                      width: 1,
+    return Stack(
+      children: [
+        // Full-screen transparent overlay to capture taps outside menu
+        Positioned.fill(
+          top: 64, // Start below nav bar
+          child: GestureDetector(
+            onTap: onClose,
+            child: Container(
+              color: Colors.transparent,
+            ),
+          ),
+        ),
+
+        // Menu dropdown
+        Positioned(
+          top: 64, // Below the nav bar
+          left: 0,
+          right: 0,
+          child: GestureDetector(
+            onTap: () {}, // Prevent tap propagation to overlay behind
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOut,
+              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
+              decoration: BoxDecoration(
+                color: AppTheme.backgroundPrimary.withValues(alpha: 0.98),
+                border: Border(
+                  bottom: BorderSide(
+                    color: AppTheme.cyanAccent.withValues(alpha: 0.3),
+                    width: 1,
+                  ),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.5),
+                    blurRadius: 20,
+                    spreadRadius: 0,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Navigation links
+                  ...navLinks.map((link) {
+                    final isActive = activeSection == link['section'];
+
+                    return _buildMenuLink(
+                      label: link['label']!,
+                      isActive: isActive,
+                      onTap: () => onNavLinkTap(link['section']!),
+                    );
+                  }),
+
+                  // Divider
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Container(
+                      height: 1,
+                      color: AppTheme.cyanAccent.withValues(alpha: 0.2),
                     ),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.5),
-                      blurRadius: 20,
-                      spreadRadius: 0,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Navigation links
-                    ...navLinks.map((link) {
-                      final isActive = activeSection == link['section'];
 
-                      return _buildMenuLink(
-                        label: link['label']!,
-                        isActive: isActive,
-                        onTap: () => onNavLinkTap(link['section']!),
-                      );
-                    }),
-
-                    // Divider
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: Container(
-                        height: 1,
-                        color: AppTheme.cyanAccent.withValues(alpha: 0.2),
-                      ),
-                    ),
-
-                    // CTA button
-                    PrimaryButton(
-                      text: 'Join Beta',
-                      onPressed: onDownloadTap,
-                      width: double.infinity,
-                      height: 48,
-                    ),
-                  ],
-                ),
+                  // CTA button
+                  PrimaryButton(
+                    text: 'Join Beta',
+                    onPressed: onDownloadTap,
+                    width: double.infinity,
+                    height: 48,
+                  ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 

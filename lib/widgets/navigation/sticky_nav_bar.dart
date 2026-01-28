@@ -221,16 +221,19 @@ class _StickyNavBarState extends State<StickyNavBar> {
   Widget _buildMobileLayout(BuildContext context) {
     return Stack(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Logo (tappable, scrolls to top)
-            _buildLogo(),
+        SizedBox(
+          height: 64, // Match the container height
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Logo (tappable, scrolls to top)
+              _buildLogo(),
 
-            // Hamburger menu icon
-            _buildHamburgerIcon(),
-          ],
+              // Hamburger menu icon
+              _buildHamburgerIcon(),
+            ],
+          ),
         ),
 
         // Mobile menu overlay
