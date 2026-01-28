@@ -26,7 +26,8 @@ class StatsService {
     // Return cached value if still valid
     if (_cachedTotalScans != null &&
         _lastFetchTime != null &&
-        DateTime.now().difference(_lastFetchTime!) < const Duration(minutes: 5)) {
+        DateTime.now().difference(_lastFetchTime!) <
+            const Duration(minutes: 5)) {
       return _cachedTotalScans!;
     }
 
@@ -57,7 +58,8 @@ class StatsService {
     // Return cached value if still valid
     if (_cachedTotalUsers != null &&
         _lastFetchTime != null &&
-        DateTime.now().difference(_lastFetchTime!) < const Duration(minutes: 5)) {
+        DateTime.now().difference(_lastFetchTime!) <
+            const Duration(minutes: 5)) {
       return _cachedTotalUsers!;
     }
 

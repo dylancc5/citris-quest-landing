@@ -32,19 +32,23 @@ Flutter Web landing page for CITRIS Quest celebrating 25 years of CITRIS innovat
 ### Setup
 
 1. Install dependencies:
+
 ```bash
 flutter pub get
 ```
 
 2. Run locally (with Supabase so "By the numbers" and forms work):
+
 ```bash
 flutter run -d chrome \
   --dart-define=SUPABASE_URL=https://YOUR_PROJECT.supabase.co \
   --dart-define=SUPABASE_ANON_KEY=your_anon_key
 ```
+
 Flutter web only reads these via `--dart-define` at build/run time.
 
 3. Build for production:
+
 ```bash
 flutter build web --release \
   --base-href /citris-quest-landing/ \

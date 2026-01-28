@@ -57,42 +57,91 @@ class _CreditsSectionState extends State<CreditsSection> {
       {
         'title': 'Development Team',
         'items': [
-          'Product Lead & Full-Stack Dev: Dylan Chen',
-          'Computer Vision Engineer: Dylan Chen',
-          'CV Research Assistant: William Su',
-          'UX/UI Designer: Dylan Chen',
-          'Product Design: Madeline Louise Aguilera',
-          'Quality Assurance: Dylan Chen',
+          {
+            'role': 'Product Lead & Full-Stack Dev',
+            'roleColor': AppTheme.bluePrimary,
+            'names': ['Dylan Chen']
+          },
+          {
+            'role': 'Computer Vision Engineer',
+            'roleColor': AppTheme.cyanAccent,
+            'names': ['Dylan Chen', 'William Su']
+          },
+          {
+            'role': 'UX/UI Designer',
+            'roleColor': AppTheme.magentaPrimary,
+            'names': ['Dylan Chen']
+          },
+          {
+            'role': 'Product Design',
+            'roleColor': AppTheme.yellowPrimary,
+            'names': ['Madeline Louise Aguilera', 'Dylan Chen']
+          },
+          {
+            'role': 'Quality Assurance',
+            'roleColor': AppTheme.redPrimary,
+            'names': ['Dylan Chen']
+          },
         ]
       },
       {
         'title': 'Creative Team',
         'items': [
-          'Pixel Artist: William Su',
-          'Pixel Artist: Zachary Weible',
-          'Pixel Artist: Luca Angelidis',
-          'Pixel Artist: Dylan Chen',
-          'Game Designer: Samuel Jeyapaul',
-          'Game Designer: Joshua Lee',
-          'Game Designer: Dylan Chen',
-          '3D CAD Artist: Stanley Fong',
-          '3D CAD Artist: Dylan Chen',
+          {
+            'role': 'Pixel Artist',
+            'roleColor': AppTheme.magentaPrimary,
+            'names': ['William Su', 'Zachary Weible', 'Luca Angelidis', 'Dylan Chen']
+          },
+          {
+            'role': 'Game Designer',
+            'roleColor': AppTheme.yellowPrimary,
+            'names': ['Dylan Chen', 'Samuel Jeyapaul', 'Joshua Lee']
+          },
+          {
+            'role': '3D CAD Artist',
+            'roleColor': AppTheme.greenPrimary,
+            'names': ['Stanley Fong', 'Dylan Chen']
+          },
         ]
       },
       {
         'title': 'Legal & Compliance',
         'items': [
-          'Legal Contributor: Lucy Zhao',
+          {
+            'role': 'Legal Contributor',
+            'roleColor': AppTheme.orangePrimary,
+            'names': ['Lucy Zhao']
+          },
         ]
       },
       {
         'title': 'Technology Partners',
         'items': [
-          'Project Sponsor: CITRIS & Banatao Institute',
-          'Backend: Supabase',
-          'ML Hosting: Hugging Face',
-          'Typography: Google Fonts',
-          'Framework: Flutter',
+          {
+            'role': 'Project Sponsor',
+            'roleColor': AppTheme.bluePrimary,
+            'names': ['CITRIS & Banatao Institute']
+          },
+          {
+            'role': 'Backend',
+            'roleColor': AppTheme.cyanAccent,
+            'names': ['Supabase']
+          },
+          {
+            'role': 'ML Hosting',
+            'roleColor': AppTheme.greenPrimary,
+            'names': ['Hugging Face']
+          },
+          {
+            'role': 'Typography',
+            'roleColor': AppTheme.magentaPrimary,
+            'names': ['Google Fonts']
+          },
+          {
+            'role': 'Framework',
+            'roleColor': AppTheme.yellowPrimary,
+            'names': ['Flutter']
+          },
         ]
       },
     ];
@@ -106,7 +155,7 @@ class _CreditsSectionState extends State<CreditsSection> {
             padding: const EdgeInsets.only(bottom: 24),
             child: SizedBox(
               width: double.infinity,
-              child: _buildCreditCard(index, cat['title'] as String, cat['items'] as List<String>),
+              child: _buildCreditCard(index, cat['title'] as String, cat['items'] as List<Map<String, dynamic>>),
             ),
           );
         }).toList(),
@@ -123,7 +172,7 @@ class _CreditsSectionState extends State<CreditsSection> {
             Breakpoints.horizontalPadding(context) * 2 - 24) / 2;
           return SizedBox(
             width: cardWidth,
-            child: _buildCreditCard(index, cat['title'] as String, cat['items'] as List<String>),
+            child: _buildCreditCard(index, cat['title'] as String, cat['items'] as List<Map<String, dynamic>>),
           );
         }).toList(),
       );
@@ -137,7 +186,7 @@ class _CreditsSectionState extends State<CreditsSection> {
           return Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: _buildCreditCard(index, cat['title'] as String, cat['items'] as List<String>),
+              child: _buildCreditCard(index, cat['title'] as String, cat['items'] as List<Map<String, dynamic>>),
             ),
           );
         }).toList(),
@@ -145,7 +194,7 @@ class _CreditsSectionState extends State<CreditsSection> {
     }
   }
 
-  Widget _buildCreditCard(int cardIndex, String title, List<String> items) {
+  Widget _buildCreditCard(int cardIndex, String title, List<Map<String, dynamic>> items) {
     return MouseRegion(
       onEnter: (_) => setState(() => _hoveredCard = cardIndex),
       onExit: (_) => setState(() => _hoveredCard = null),
@@ -187,16 +236,33 @@ class _CreditsSectionState extends State<CreditsSection> {
             ),
           ),
           const SizedBox(height: 16),
-          ...items.map((item) => Padding(
-            padding: const EdgeInsets.only(bottom: 8),
-            child: Text(
-              item,
-              style: GoogleFonts.tiny5(
-                fontSize: 14,
-                color: Colors.white.withValues(alpha: 0.85),
+          ...items.expand((item) => [
+            // Role header
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Text(
+                (item['role'] as String).toUpperCase(),
+                style: GoogleFonts.tiny5(
+                  fontSize: 14,
+                  color: item['roleColor'] as Color,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
-          )),
+            // Names list
+            ...(item['names'] as List<String>).map((name) => Padding(
+              padding: const EdgeInsets.only(bottom: 6, left: 12),
+              child: Text(
+                name,
+                style: GoogleFonts.tiny5(
+                  fontSize: 14,
+                  color: Colors.white.withValues(alpha: 0.85),
+                ),
+              ),
+            )),
+            // Spacing between role groups
+            const SizedBox(height: 8),
+          ]),
         ],
       ),
         ),
