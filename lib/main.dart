@@ -34,7 +34,7 @@ class CitrisQuestLandingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CITRIS Quest - Location-Based Campus Art Game',
+      title: 'CITRIS Quest – 25th Anniversary',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: AppTheme.backgroundPrimary,

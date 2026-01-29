@@ -26,8 +26,8 @@ class HamburgerMenuOverlay extends StatelessWidget {
       children: [
         // Full-screen transparent overlay to capture taps outside menu
         Positioned.fill(
-          top: 64, // Start below nav bar
           child: GestureDetector(
+            behavior: HitTestBehavior.translucent,
             onTap: onClose,
             child: Container(
               color: Colors.transparent,
@@ -37,7 +37,7 @@ class HamburgerMenuOverlay extends StatelessWidget {
 
         // Menu dropdown
         Positioned(
-          top: 64, // Below the nav bar
+          top: 0, // Position adjusted - now relative to parent positioning
           left: 0,
           right: 0,
           child: GestureDetector(

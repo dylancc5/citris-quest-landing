@@ -162,92 +162,95 @@ class _StickyNavBarState extends State<StickyNavBar> {
     final screenWidth = MediaQuery.of(context).size.width;
     final segmentCount = (screenWidth / 55).round().clamp(20, 30);
 
-    return AnimatedPositioned(
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-      top: _isVisible ? 0 : -100,
-      left: 0,
-      right: 0,
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppTheme.backgroundPrimary.withValues(alpha: 0.95),
-          border: Border(
-            bottom: BorderSide(
-              color: AppTheme.cyanAccent,
-              width: 1,
-            ),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: AppTheme.cyanAccent.withValues(alpha: 0.2),
-              blurRadius: 20,
-              spreadRadius: 0,
-              offset: const Offset(0, 1),
-            ),
-          ],
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Main nav bar content
-            Container(
-              height: isMobile ? 64 : 80,
-              padding: EdgeInsets.symmetric(
-                horizontal: isMobile ? 16 : 48,
-              ),
-              child: isMobile
-                  ? _buildMobileLayout(context)
-                  : _buildDesktopLayout(context),
-            ),
-
-            // Progress bar at bottom of nav bar
-            SizedBox(
-              height: 4,
-              child: CustomPaint(
-                painter: SegmentedProgressPainter(
-                  progress: _scrollProgress,
-                  filledColor: AppTheme.cyanAccent,
-                  emptyColor: Colors.white.withValues(alpha: 0.1),
-                  segmentCount: segmentCount,
+    return Stack(
+      children: [
+        // Main nav bar
+        AnimatedPositioned(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+          top: _isVisible ? 0 : -100,
+          left: 0,
+          right: 0,
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppTheme.backgroundPrimary.withValues(alpha: 0.95),
+              border: Border(
+                bottom: BorderSide(
+                  color: AppTheme.cyanAccent,
+                  width: 1,
                 ),
               ),
+              boxShadow: [
+                BoxShadow(
+                  color: AppTheme.cyanAccent.withValues(alpha: 0.2),
+                  blurRadius: 20,
+                  spreadRadius: 0,
+                  offset: const Offset(0, 1),
+                ),
+              ],
             ),
-          ],
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Main nav bar content
+                Container(
+                  height: isMobile ? 64 : 80,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isMobile ? 16 : 48,
+                  ),
+                  child: isMobile
+                      ? _buildMobileLayout(context)
+                      : _buildDesktopLayout(context),
+                ),
+
+                // Progress bar at bottom of nav bar
+                SizedBox(
+                  height: 4,
+                  child: CustomPaint(
+                    painter: SegmentedProgressPainter(
+                      progress: _scrollProgress,
+                      filledColor: AppTheme.cyanAccent,
+                      emptyColor: Colors.white.withValues(alpha: 0.1),
+                      segmentCount: segmentCount,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-      ),
+
+        // Mobile menu overlay (rendered outside nav bar container to prevent clipping)
+        if (isMobile && _isMenuOpen)
+          Positioned(
+            top: _isVisible ? 68 : -100, // 64px nav bar + 4px progress bar
+            left: 0,
+            right: 0,
+            child: HamburgerMenuOverlay(
+              navLinks: _navLinks,
+              activeSection: _activeSection,
+              onNavLinkTap: _handleNavLinkTap,
+              onDownloadTap: () {
+                _closeMenu();
+                widget.onDownloadTap();
+              },
+              onClose: _closeMenu,
+            ),
+          ),
+      ],
     );
   }
 
   Widget _buildMobileLayout(BuildContext context) {
-    return Stack(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(
-          height: 64, // Match the container height
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Logo (tappable, scrolls to top)
-              _buildLogo(),
+        // Logo (tappable, scrolls to top)
+        _buildLogo(),
 
-              // Hamburger menu icon
-              _buildHamburgerIcon(),
-            ],
-          ),
-        ),
-
-        // Mobile menu overlay
-        if (_isMenuOpen)
-          HamburgerMenuOverlay(
-            navLinks: _navLinks,
-            activeSection: _activeSection,
-            onNavLinkTap: _handleNavLinkTap,
-            onDownloadTap: () {
-              _closeMenu();
-              widget.onDownloadTap();
-            },
-            onClose: _closeMenu,
-          ),
+        // Hamburger menu icon
+        _buildHamburgerIcon(),
       ],
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../core/breakpoints.dart';
 import '../widgets/common/animated_starfield.dart';
+import '../widgets/common/section_divider.dart';
 import '../widgets/navigation/sticky_nav_bar.dart';
 import '../widgets/sections/hero_section.dart';
 import '../widgets/sections/about_section.dart';
@@ -77,8 +78,8 @@ class _LandingPageState extends State<LandingPage> {
     _scrollToSection('download');
   }
 
-  void _scrollToHowToPlay() {
-    _scrollToSection('how_to_play');
+  void _scrollToAbout() {
+    _scrollToSection('about');
   }
 
   @override
@@ -101,12 +102,13 @@ class _LandingPageState extends State<LandingPage> {
                   // Hero Section (full viewport height)
                   HeroSection(
                     key: _heroKey,
-                    onLearnMoreTap: _scrollToHowToPlay,
+                    onLearnMoreTap: _scrollToAbout,
                     onDownloadTap: _scrollToDownload,
                   ),
 
                   // About CITRIS Section
                   SizedBox(height: Breakpoints.sectionSpacing(context)),
+                  const SectionDivider(),
                   AboutSection(key: _aboutKey),
 
                   // Live Stats Section
@@ -115,26 +117,32 @@ class _LandingPageState extends State<LandingPage> {
 
                   // How to Play Section
                   SizedBox(height: Breakpoints.sectionSpacing(context)),
+                  const SectionDivider(),
                   HowToPlaySection(key: _howToPlayKey),
 
                   // Download Section
                   SizedBox(height: Breakpoints.sectionSpacing(context)),
+                  const SectionDivider(),
                   DownloadSection(key: _downloadKey),
 
                   // Contribute Section
                   SizedBox(height: Breakpoints.sectionSpacing(context)),
+                  const SectionDivider(),
                   ContributeSection(key: _contributeKey),
 
                   // FAQ Section
                   SizedBox(height: Breakpoints.sectionSpacing(context)),
+                  const SectionDivider(),
                   FaqSection(key: _faqKey),
 
                   // Credits Section
                   SizedBox(height: Breakpoints.sectionSpacing(context)),
+                  const SectionDivider(),
                   CreditsSection(key: _creditsKey),
 
                   // Footer
                   SizedBox(height: Breakpoints.sectionSpacing(context)),
+                  const SectionDivider(),
                   const FooterSection(),
                 ],
               ),

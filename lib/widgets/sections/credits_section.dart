@@ -18,7 +18,8 @@ class _CreditsSectionState extends State<CreditsSection> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxWidth: Breakpoints.maxContentWidth(context)),
+      constraints:
+          BoxConstraints(maxWidth: Breakpoints.maxContentWidth(context)),
       padding: EdgeInsets.symmetric(
         horizontal: Breakpoints.horizontalPadding(context),
       ),
@@ -37,7 +38,8 @@ class _CreditsSectionState extends State<CreditsSection> {
               fontWeight: FontWeight.w700,
             ),
           ),
-          SizedBox(height: Breakpoints.responsive<double>(
+          SizedBox(
+              height: Breakpoints.responsive<double>(
             context,
             mobile: 32,
             tablet: 48,
@@ -58,12 +60,12 @@ class _CreditsSectionState extends State<CreditsSection> {
         'title': 'Development Team',
         'items': [
           {
-            'role': 'Product Lead & Full-Stack Dev',
+            'role': 'Product Lead',
             'roleColor': AppTheme.bluePrimary,
             'names': ['Dylan Chen']
           },
           {
-            'role': 'Computer Vision Engineer',
+            'role': 'Computer Vision Engineers',
             'roleColor': AppTheme.cyanAccent,
             'names': ['Dylan Chen', 'William Su']
           },
@@ -73,9 +75,9 @@ class _CreditsSectionState extends State<CreditsSection> {
             'names': ['Dylan Chen']
           },
           {
-            'role': 'Product Design',
+            'role': 'Product Designers',
             'roleColor': AppTheme.yellowPrimary,
-            'names': ['Madeline Louise Aguilera', 'Dylan Chen']
+            'names': ['Dylan Chen', 'Madeline Louise Aguilera']
           },
           {
             'role': 'Quality Assurance',
@@ -88,17 +90,22 @@ class _CreditsSectionState extends State<CreditsSection> {
         'title': 'Creative Team',
         'items': [
           {
-            'role': 'Pixel Artist',
+            'role': 'Pixel Artists',
             'roleColor': AppTheme.magentaPrimary,
-            'names': ['William Su', 'Zachary Weible', 'Luca Angelidis', 'Dylan Chen']
+            'names': [
+              'William Su',
+              'Zachary Weible',
+              'Luca Angelidis',
+              'Dylan Chen'
+            ]
           },
           {
-            'role': 'Game Designer',
+            'role': 'Game Designers',
             'roleColor': AppTheme.yellowPrimary,
             'names': ['Dylan Chen', 'Samuel Jeyapaul', 'Joshua Lee']
           },
           {
-            'role': '3D CAD Artist',
+            'role': '3D CAD Artists',
             'roleColor': AppTheme.greenPrimary,
             'names': ['Stanley Fong', 'Dylan Chen']
           },
@@ -155,7 +162,8 @@ class _CreditsSectionState extends State<CreditsSection> {
             padding: const EdgeInsets.only(bottom: 24),
             child: SizedBox(
               width: double.infinity,
-              child: _buildCreditCard(index, cat['title'] as String, cat['items'] as List<Map<String, dynamic>>),
+              child: _buildCreditCard(index, cat['title'] as String,
+                  cat['items'] as List<Map<String, dynamic>>),
             ),
           );
         }).toList(),
@@ -169,10 +177,13 @@ class _CreditsSectionState extends State<CreditsSection> {
           final index = entry.key;
           final cat = entry.value;
           final cardWidth = (MediaQuery.of(context).size.width -
-            Breakpoints.horizontalPadding(context) * 2 - 24) / 2;
+                  Breakpoints.horizontalPadding(context) * 2 -
+                  24) /
+              2;
           return SizedBox(
             width: cardWidth,
-            child: _buildCreditCard(index, cat['title'] as String, cat['items'] as List<Map<String, dynamic>>),
+            child: _buildCreditCard(index, cat['title'] as String,
+                cat['items'] as List<Map<String, dynamic>>),
           );
         }).toList(),
       );
@@ -186,7 +197,8 @@ class _CreditsSectionState extends State<CreditsSection> {
           return Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: _buildCreditCard(index, cat['title'] as String, cat['items'] as List<Map<String, dynamic>>),
+              child: _buildCreditCard(index, cat['title'] as String,
+                  cat['items'] as List<Map<String, dynamic>>),
             ),
           );
         }).toList(),
@@ -194,7 +206,8 @@ class _CreditsSectionState extends State<CreditsSection> {
     }
   }
 
-  Widget _buildCreditCard(int cardIndex, String title, List<Map<String, dynamic>> items) {
+  Widget _buildCreditCard(
+      int cardIndex, String title, List<Map<String, dynamic>> items) {
     return MouseRegion(
       onEnter: (_) => setState(() => _hoveredCard = cardIndex),
       onExit: (_) => setState(() => _hoveredCard = null),
@@ -218,53 +231,54 @@ class _CreditsSectionState extends State<CreditsSection> {
             borderRadius: BorderRadius.circular(8),
             boxShadow: [
               BoxShadow(
-                color: AppTheme.cyanAccent.withValues(alpha: _hoveredCard == cardIndex ? 0.5 : 0.3),
+                color: AppTheme.cyanAccent
+                    .withValues(alpha: _hoveredCard == cardIndex ? 0.5 : 0.3),
                 blurRadius: _hoveredCard == cardIndex ? 25 : 12,
                 spreadRadius: 1,
               ),
             ],
           ),
           child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title.toUpperCase(),
-            style: GoogleFonts.tiny5(
-              fontSize: 20,
-              color: AppTheme.cyanAccent,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const SizedBox(height: 16),
-          ...items.expand((item) => [
-            // Role header
-            Padding(
-              padding: const EdgeInsets.only(bottom: 4),
-              child: Text(
-                (item['role'] as String).toUpperCase(),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title.toUpperCase(),
                 style: GoogleFonts.tiny5(
-                  fontSize: 14,
-                  color: item['roleColor'] as Color,
+                  fontSize: 20,
+                  color: AppTheme.cyanAccent,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-            ),
-            // Names list
-            ...(item['names'] as List<String>).map((name) => Padding(
-              padding: const EdgeInsets.only(bottom: 6, left: 12),
-              child: Text(
-                name,
-                style: GoogleFonts.tiny5(
-                  fontSize: 14,
-                  color: Colors.white.withValues(alpha: 0.85),
-                ),
-              ),
-            )),
-            // Spacing between role groups
-            const SizedBox(height: 8),
-          ]),
-        ],
-      ),
+              const SizedBox(height: 16),
+              ...items.expand((item) => [
+                    // Role header
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 4),
+                      child: Text(
+                        (item['role'] as String).toUpperCase(),
+                        style: GoogleFonts.tiny5(
+                          fontSize: 14,
+                          color: item['roleColor'] as Color,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    // Names list
+                    ...(item['names'] as List<String>).map((name) => Padding(
+                          padding: const EdgeInsets.only(bottom: 6, left: 12),
+                          child: Text(
+                            name,
+                            style: GoogleFonts.tiny5(
+                              fontSize: 14,
+                              color: Colors.white.withValues(alpha: 0.85),
+                            ),
+                          ),
+                        )),
+                    // Spacing between role groups
+                    const SizedBox(height: 8),
+                  ]),
+            ],
+          ),
         ),
       ),
     );
