@@ -51,3 +51,5 @@ class CitrisQuestLandingApp extends StatelessWidget {
     );
   }
 }
+
+// NOTE: debug must be run in citris-quest, not citris-quest-landing
