@@ -15,6 +15,21 @@ class HowToPlaySection extends StatefulWidget {
 class _HowToPlaySectionState extends State<HowToPlaySection> {
   int? _hoveredIndex;
 
+  String _getScreenshotPath(int stepNumber) {
+    switch (stepNumber) {
+      case 1:
+        return 'assets/images/demo_scan_screen.PNG';
+      case 2:
+        return 'assets/images/demo_map_screen.PNG';
+      case 3:
+        return 'assets/images/demo_achievement_screen.PNG';
+      case 4:
+        return 'assets/images/demo_leaderboard_screen.PNG';
+      default:
+        return 'assets/images/demo_scan_screen.PNG';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -209,29 +224,26 @@ class _HowToPlaySectionState extends State<HowToPlaySection> {
             ),
           ),
           const SizedBox(height: 16),
-          // Placeholder for screenshot
-          Container(
-            height: 180,
-            decoration: BoxDecoration(
-              color: AppTheme.backgroundPrimary,
-              border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.image_outlined, color: color.withValues(alpha: 0.3), size: 48),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Game Screenshot\nComing Soon',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.tiny5(
-                      fontSize: 12,
-                      color: color.withValues(alpha: 0.5),
+          // Screenshot
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: Container(
+              height: 180,
+              decoration: BoxDecoration(
+                border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Image.asset(
+                _getScreenshotPath(number),
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: AppTheme.backgroundPrimary,
+                    child: Center(
+                      child: Icon(Icons.image_outlined, color: color.withValues(alpha: 0.3), size: 48),
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
           ),
