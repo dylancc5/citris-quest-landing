@@ -225,19 +225,20 @@ class _HowToPlaySectionState extends State<HowToPlaySection> {
           ),
           const SizedBox(height: 16),
           // Screenshot
-          ClipRRect(
-            borderRadius: BorderRadius.circular(4),
-            child: Container(
-              height: 180,
-              decoration: BoxDecoration(
-                border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
-                borderRadius: BorderRadius.circular(4),
-              ),
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(4),
               child: Image.asset(
                 _getScreenshotPath(number),
-                fit: BoxFit.cover,
+                fit: BoxFit.contain,
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
+                    height: 400,
                     color: AppTheme.backgroundPrimary,
                     child: Center(
                       child: Icon(Icons.image_outlined, color: color.withValues(alpha: 0.3), size: 48),

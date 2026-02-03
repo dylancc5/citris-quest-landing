@@ -2,7 +2,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import '../../core/theme.dart';
 import '../../core/breakpoints.dart';
-import '../../painters/space_invader_painter.dart';
+import '../common/space_invader_icon.dart';
 import '../common/primary_button.dart';
 import '../common/pulsing_glow_text.dart';
 
@@ -82,14 +82,9 @@ class _HeroSectionState extends State<HeroSection>
           builder: (context, child) {
             return Transform.translate(
               offset: Offset(0, _floatAnimation.value),
-              child: SizedBox(
-                width: 120,
-                height: 120 * (8 / 11), // Maintain 11:8 aspect ratio
-                child: CustomPaint(
-                  painter: SpaceInvaderPainter(
-                    color: AppTheme.cyanAccent,
-                  ),
-                ),
+              child: SpaceInvaderIcon(
+                size: 120,
+                color: AppTheme.cyanAccent,
               ),
             );
           },
@@ -165,14 +160,9 @@ class _HeroSectionState extends State<HeroSection>
             builder: (context, child) {
               return Transform.translate(
                 offset: Offset(0, _floatAnimation.value),
-                child: SizedBox(
-                  width: screenWidth * 0.25,
-                  height: screenWidth * 0.25,
-                  child: CustomPaint(
-                    painter: SpaceInvaderPainter(
-                      color: AppTheme.cyanAccent,
-                    ),
-                  ),
+                child: SpaceInvaderIcon(
+                  size: screenWidth * 0.25,
+                  color: AppTheme.cyanAccent,
                 ),
               );
             },

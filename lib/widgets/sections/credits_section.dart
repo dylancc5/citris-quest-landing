@@ -70,7 +70,7 @@ class _CreditsSectionState extends State<CreditsSection> {
             'names': ['Dylan Chen', 'William Su']
           },
           {
-            'role': 'UX/UI Designer',
+            'role': 'UI/UX Designer',
             'roleColor': AppTheme.magentaPrimary,
             'names': ['Dylan Chen']
           },
@@ -115,9 +115,14 @@ class _CreditsSectionState extends State<CreditsSection> {
         'title': 'Legal & Compliance',
         'items': [
           {
-            'role': 'Legal Contributor',
+            'role': 'Policy Writer',
             'roleColor': AppTheme.orangePrimary,
             'names': ['Lucy Zhao']
+          },
+          {
+            'role': 'Legal Compliance Analyst',
+            'roleColor': AppTheme.orangePrimary,
+            'names': ['Dylan Chen']
           },
         ]
       },

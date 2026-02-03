@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/theme.dart';
 import '../../core/breakpoints.dart';
-import '../../painters/space_invader_painter.dart';
+import '../common/space_invader_icon.dart';
 import '../../ui/painters/segmented_progress_painter.dart';
 import '../common/primary_button.dart';
 import 'hamburger_menu_overlay.dart';
@@ -295,12 +295,9 @@ class _StickyNavBarState extends State<StickyNavBar> {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: _scrollToTop,
-        child: SizedBox(
-          width: logoWidth,
-          height: logoHeight,
-          child: CustomPaint(
-            painter: SpaceInvaderPainter(color: AppTheme.cyanAccent),
-          ),
+        child: SpaceInvaderIcon(
+          size: logoWidth,
+          color: AppTheme.cyanAccent,
         ),
       ),
     );
