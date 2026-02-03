@@ -64,13 +64,15 @@ class _StickyNavBarState extends State<StickyNavBar> {
     final maxScroll = widget.scrollController.position.maxScrollExtent;
 
     // Calculate scroll progress
-    final newProgress = maxScroll > 0 ? (offset / maxScroll).clamp(0.0, 1.0) : 0.0;
+    final newProgress =
+        maxScroll > 0 ? (offset / maxScroll).clamp(0.0, 1.0) : 0.0;
 
     // Show nav bar after scrolling past hero section
     final shouldBeVisible = offset > widget.heroHeight * 0.8;
 
     // Only update if progress changed significantly (reduces repaints)
-    if (shouldBeVisible != _isVisible || (newProgress - _scrollProgress).abs() > 0.001) {
+    if (shouldBeVisible != _isVisible ||
+        (newProgress - _scrollProgress).abs() > 0.001) {
       setState(() {
         _isVisible = shouldBeVisible;
         _scrollProgress = newProgress;
@@ -90,7 +92,8 @@ class _StickyNavBarState extends State<StickyNavBar> {
 
     widget.sectionKeys.forEach((section, key) {
       if (key.currentContext != null) {
-        final RenderBox? box = key.currentContext!.findRenderObject() as RenderBox?;
+        final RenderBox? box =
+            key.currentContext!.findRenderObject() as RenderBox?;
         if (box != null) {
           final position = box.localToGlobal(Offset.zero);
           // Store absolute position (position.dy is relative to viewport, add offset for absolute)
@@ -307,6 +310,7 @@ class _StickyNavBarState extends State<StickyNavBar> {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
         onTap: _toggleMenu,
         child: Container(
           width: 44,
@@ -314,9 +318,7 @@ class _StickyNavBarState extends State<StickyNavBar> {
           padding: const EdgeInsets.all(12),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            child: _isMenuOpen
-                ? _buildXIcon()
-                : _buildHamburgerBars(),
+            child: _isMenuOpen ? _buildXIcon() : _buildHamburgerBars(),
           ),
         ),
       ),
@@ -383,7 +385,8 @@ class _StickyNavBarState extends State<StickyNavBar> {
               onTap: () => _handleNavLinkTap(link['section']!),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                 child: Text(
                   link['label']!.toUpperCase(),
                   style: GoogleFonts.tiny5(

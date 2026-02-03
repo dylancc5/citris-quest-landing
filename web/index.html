@@ -1,143 +1,170 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <base href="$FLUTTER_BASE_HREF">
+  <head>
+    <base href="$FLUTTER_BASE_HREF" />
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
 
-  <!-- Primary Meta Tags -->
-  <title>CITRIS Quest – 25th Anniversary</title>
-  <meta name="title" content="CITRIS Quest – 25th Anniversary">
-  <meta name="description" content="Celebrate 25 years of CITRIS innovation. Scan campus artwork, earn rewards, and compete with the community in this retro-styled mobile game.">
-  <meta name="keywords" content="CITRIS, UC Berkeley, location-based game, campus art, iOS game, TestFlight, retro game, pixel art">
-  <meta name="author" content="CITRIS Quest Team">
+    <!-- Primary Meta Tags -->
+    <title>CITRIS Quest – 25th Anniversary</title>
+    <meta name="title" content="CITRIS Quest – 25th Anniversary" />
+    <meta
+      name="description"
+      content="Celebrate 25 years of CITRIS innovation. Scan campus artwork, earn rewards, and compete with the community in this retro-styled mobile game."
+    />
+    <meta
+      name="keywords"
+      content="CITRIS, UC Berkeley, location-based game, campus art, iOS game, TestFlight, retro game, pixel art"
+    />
+    <meta name="author" content="CITRIS Quest Team" />
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://citrisquest.org/">
-  <meta property="og:title" content="CITRIS Quest – 25th Anniversary">
-  <meta property="og:description" content="Scan campus artwork, earn rewards, and compete. Join the iOS beta now!">
-  <meta property="og:site_name" content="CITRIS Quest">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://citrisquest.org/" />
+    <meta property="og:title" content="CITRIS Quest – 25th Anniversary" />
+    <meta
+      property="og:description"
+      content="Scan campus artwork, earn rewards, and compete. Join the iOS beta now!"
+    />
+    <meta property="og:site_name" content="CITRIS Quest" />
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:url" content="https://citrisquest.org/">
-  <meta property="twitter:title" content="CITRIS Quest – 25th Anniversary">
-  <meta property="twitter:description" content="Scan campus artwork, earn rewards, and compete. Join the iOS beta now!">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://citrisquest.org/" />
+    <meta property="twitter:title" content="CITRIS Quest – 25th Anniversary" />
+    <meta
+      property="twitter:description"
+      content="Scan campus artwork, earn rewards, and compete. Join the iOS beta now!"
+    />
 
-  <!-- iOS meta tags & icons -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="CITRIS Quest">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+    <!-- iOS meta tags & icons -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="CITRIS Quest" />
+    <link rel="apple-touch-icon" href="icons/Icon-192.png" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png" />
 
-  <!-- Preconnect to Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Preconnect to Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <!-- Preload and load Google Fonts -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Micro+5&family=Tiny5&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Micro+5&family=Tiny5&display=swap">
+    <!-- Preload and load Google Fonts -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Micro+5&family=Tiny5&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Micro+5&family=Tiny5&display=swap"
+    />
 
-  <!-- Manifest -->
-  <link rel="manifest" href="manifest.json">
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json" />
 
-  <!-- Loading screen styles -->
-  <style>
-    #loading {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #0A0E27;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      transition: opacity 0.3s ease-out;
-    }
+    <!-- Loading screen styles -->
+    <style>
+      #loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #0a0e27;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.3s ease-out;
+      }
 
-    #loading .loading-content {
-      text-align: center;
-    }
+      #loading .loading-content {
+        text-align: center;
+      }
 
-    #loading p {
-      font-family: monospace;
-      font-size: 24px;
-      color: white;
-      letter-spacing: 4px;
-      margin: 0;
-      text-shadow: 0 0 20px rgba(0, 229, 255, 0.6),
-                   0 0 40px rgba(0, 229, 255, 0.4);
-    }
-  </style>
-</head>
-<body>
-  <!-- Loading screen -->
-  <div id="loading">
-    <div class="loading-content">
-      <p>LOADING...</p>
+      #loading p {
+        font-family: "Micro 5", "Tiny5", sans-serif;
+        font-size: 24px;
+        color: #1295d8;
+        letter-spacing: 4px;
+        margin: 0;
+        text-shadow:
+          0 0 20px rgba(18, 149, 216, 0.6),
+          0 0 40px rgba(18, 149, 216, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading screen -->
+    <div id="loading">
+      <div class="loading-content">
+        <p>LOADING...</p>
+      </div>
     </div>
-  </div>
 
-  <!-- Font loading and Flutter initialization script -->
-  <script>
-    // Track both font loading and Flutter readiness
-    let fontsReady = false;
-    let flutterReady = false;
+    <!-- Font loading and Flutter initialization script -->
+    <script>
+      // Track both font loading and Flutter readiness
+      let fontsReady = false;
+      let flutterReady = false;
 
-    // Use CSS Font Loading API to detect when fonts are loaded
-    if (document.fonts) {
-      Promise.all([
-        document.fonts.load('1em "Micro 5"'),
-        document.fonts.load('1em Tiny5')
-      ]).then(() => {
-        console.log('Fonts loaded successfully');
+      // Use CSS Font Loading API to detect when fonts are loaded
+      if (document.fonts) {
+        Promise.all([
+          document.fonts.load('1em "Micro 5"'),
+          document.fonts.load("1em Tiny5"),
+        ])
+          .then(() => {
+            console.log("Fonts loaded successfully");
+            fontsReady = true;
+            hideLoadingIfReady();
+          })
+          .catch((error) => {
+            console.warn("Font loading error:", error);
+            // If font loading fails, proceed anyway after timeout
+            setTimeout(() => {
+              fontsReady = true;
+              hideLoadingIfReady();
+            }, 3000);
+          });
+      } else {
+        // Fallback for browsers without Font Loading API
+        console.log(
+          "Font Loading API not supported, proceeding without font check",
+        );
         fontsReady = true;
+      }
+
+      // Listen for Flutter first frame
+      window.addEventListener("flutter-first-frame", function () {
+        console.log("Flutter first frame rendered");
+        flutterReady = true;
         hideLoadingIfReady();
-      }).catch((error) => {
-        console.warn('Font loading error:', error);
-        // If font loading fails, proceed anyway after timeout
-        setTimeout(() => {
-          fontsReady = true;
-          hideLoadingIfReady();
-        }, 3000);
       });
-    } else {
-      // Fallback for browsers without Font Loading API
-      console.log('Font Loading API not supported, proceeding without font check');
-      fontsReady = true;
-    }
 
-    // Listen for Flutter first frame
-    window.addEventListener('flutter-first-frame', function() {
-      console.log('Flutter first frame rendered');
-      flutterReady = true;
-      hideLoadingIfReady();
-    });
-
-    // Only hide loading screen when BOTH conditions are met
-    function hideLoadingIfReady() {
-      if (fontsReady && flutterReady) {
-        console.log('Hiding loading screen');
-        const loading = document.getElementById('loading');
-        if (loading) {
-          loading.style.opacity = '0';
-          setTimeout(() => {
-            loading.style.display = 'none';
-          }, 300);
+      // Only hide loading screen when BOTH conditions are met
+      function hideLoadingIfReady() {
+        if (fontsReady && flutterReady) {
+          console.log("Hiding loading screen");
+          const loading = document.getElementById("loading");
+          if (loading) {
+            loading.style.opacity = "0";
+            setTimeout(() => {
+              loading.style.display = "none";
+            }, 300);
+          }
         }
       }
-    }
-  </script>
+    </script>
 
-  <script src="flutter_bootstrap.js" async></script>
-</body>
+    <script src="flutter_bootstrap.js" async></script>
+  </body>
 </html>
